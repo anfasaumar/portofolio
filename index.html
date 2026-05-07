@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -536,11 +537,646 @@
         </div>
     </div>
     
+=======
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anfsumr | IT Portfolio</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+    ></script>
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"
+    ></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Roboto+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+      :root {
+        --dark-blue: #0a0f1e;
+        --cyber-magenta: #f000b8;
+        --cyber-cyan: #00f0ff;
+        --light-slate: #94a3b8;
+        --slate: #334155;
+        --text-main: #e2e8f0;
+        --text-secondary: #94a3b8;
+      }
+
+      html {
+        overflow-y: scroll;
+      }
+
+      body {
+        font-family: "Roboto Mono", monospace;
+        background-color: var(--dark-blue);
+        color: var(--text-main);
+        cursor: none;
+        overflow-x: hidden;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .body-loaded {
+        opacity: 1;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      button,
+      .nav-link {
+        font-family: "Chakra Petch", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      #threejs-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+      }
+
+      .scanline-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          0deg,
+          transparent 0,
+          rgba(255, 255, 255, 0.03) 50%,
+          transparent 100%
+        );
+        background-size: 100% 3px;
+        animation: scan 12s linear infinite;
+        pointer-events: none;
+        z-index: 9998;
+      }
+
+      @keyframes scan {
+        0% {
+          background-position-y: 0;
+        }
+        100% {
+          background-position-y: 100vh;
+        }
+      }
+
+      .cursor-dot,
+      .cursor-dot-outline {
+        pointer-events: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        opacity: 0;
+        transition:
+          opacity 0.3s ease-in-out,
+          transform 0.2s ease-in-out;
+      }
+
+      .cursor-dot {
+        width: 6px;
+        height: 6px;
+        background-color: var(--cyber-cyan);
+      }
+
+      .cursor-dot-outline {
+        width: 30px;
+        height: 30px;
+        background-color: rgba(0, 240, 255, 0.2);
+        border: 2px solid var(--cyber-cyan);
+      }
+
+      body:hover .cursor-dot,
+      body:hover .cursor-dot-outline {
+        opacity: 1;
+      }
+
+      .cursor-dot-outline.hover {
+        transform: translate(-50%, -50%) scale(1.5);
+      }
+
+      #hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+
+      #hero::before {
+        content: "";
+        position: absolute;
+        top: var(--y, 50%);
+        left: var(--x, 50%);
+        transform: translate(-50%, -50%);
+        width: 800px;
+        height: 800px;
+        background: radial-gradient(
+          circle,
+          rgba(240, 0, 184, 0.15) 0,
+          transparent 60%
+        );
+        transition:
+          top 0.2s ease-out,
+          left 0.2s ease-out;
+        pointer-events: none;
+      }
+
+      .glass-effect {
+        background: rgba(10, 15, 30, 0.7);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--slate);
+      }
+
+      .typewriter-text::after {
+        content: "_";
+        animation: blink 0.8s step-end infinite;
+        color: var(--cyber-cyan);
+      }
+
+      @keyframes blink {
+        0%,
+        to {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.8s ease-out,
+          transform 0.8s ease-out;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-left: 30px;
+        border-left: 1px solid var(--slate);
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -5px;
+        top: 5px;
+        width: 9px;
+        height: 9px;
+        background-color: var(--slate);
+        border: 2px solid var(--slate);
+        transition:
+          background-color 0.3s,
+          transform 0.3s;
+      }
+
+      .timeline-item.visible::before {
+        background-color: var(--cyber-magenta);
+        transform: scale(1.2);
+      }
+
+      .nav-link {
+        position: relative;
+        color: var(--light-slate);
+      }
+
+      .nav-link:hover {
+        color: var(--cyber-cyan);
+      }
+
+      .nav-link.active {
+        color: var(--cyber-cyan);
+        text-shadow: 0 0 5px var(--cyber-cyan);
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+        display: none;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--dark-blue);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--slate);
+        border-radius: 0;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--cyber-magenta);
+      }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .modal-overlay.visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .modal-content {
+        position: relative;
+        background: var(--dark-blue);
+        padding: 4px;
+        border: 1px solid var(--cyber-cyan);
+        box-shadow: 0 0 20px var(--cyber-cyan);
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      .modal-content img {
+        width: 100%;
+        height: 100%;
+        max-height: 85vh;
+        object-fit: contain;
+      }
+
+      .close-button {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        background: var(--cyber-cyan);
+        color: #000;
+        border-radius: 0;
+        width: 30px;
+        height: 30px;
+        font-size: 20px;
+        font-weight: 700;
+        border: none;
+        cursor: none;
+      }
+
+      .skill-card {
+        border: 1px solid transparent;
+        transition: border-color 0.3s;
+      }
+
+      .skill-card:hover {
+        border-color: var(--cyber-cyan);
+      }
+
+      .skill-card .progress-bar {
+        background-color: var(--slate);
+        height: 6px;
+        width: 100%;
+      }
+
+      .skill-card .progress {
+        background: var(--cyber-cyan);
+        height: 100%;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 1s ease-out 0.5s;
+      }
+
+      .skill-card.visible .progress {
+        transform: scaleX(var(--progress-width, 0));
+      }
+
+      .cta-button {
+        background: linear-gradient(
+          45deg,
+          var(--cyber-magenta),
+          var(--cyber-cyan)
+        );
+        color: #fff;
+        border: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 15px rgba(240, 0, 184, 0.5);
+      }
+
+      .cta-button:hover {
+        background: linear-gradient(
+          45deg,
+          var(--cyber-cyan),
+          var(--cyber-magenta)
+        );
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        color: white;
+      }
+
+      #project-filters button {
+        color: var(--light-slate);
+        border: 1px solid var(--slate);
+        padding: 8px 16px;
+        transition: all 0.3s;
+      }
+
+      #project-filters button.active,
+      #project-filters button:hover {
+        background-color: var(--cyber-cyan);
+        color: var(--dark-blue);
+        border-color: var(--cyber-cyan);
+        box-shadow: 0 0 10px var(--cyber-cyan);
+      }
+
+      .project-item,
+      .cert-item {
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+        transform-origin: center;
+      }
+
+      .project-item.hidden {
+        opacity: 0;
+        transform: scale(0.95);
+        pointer-events: none;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0;
+        overflow: hidden;
+      }
+
+      .section-title-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .section-title-wrap::before,
+      .section-title-wrap::after {
+        content: "";
+        height: 1px;
+        width: 50px;
+        background: var(--slate);
+      }
+
+      .section-title {
+        text-shadow: 0 0 10px var(--cyber-cyan);
+      }
+
+      .card-cyber {
+        border: 1px solid var(--slate);
+        transition: all 0.3s;
+      }
+
+      .card-cyber:hover {
+        border-color: var(--cyber-cyan);
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+      }
+
+      .card-cyber:hover img {
+        filter: brightness(1.1);
+      }
+
+      .card-cyber .glitch-img {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card-cyber:hover .glitch-img::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--cyber-magenta);
+        animation: glitch 0.5s steps(2, end) infinite;
+        opacity: 0.3;
+      }
+
+      @keyframes glitch {
+        0% {
+          clip-path: inset(82% 0 15% 0);
+        }
+        10% {
+          clip-path: inset(45% 0 54% 0);
+        }
+        20% {
+          clip-path: inset(23% 0 64% 0);
+        }
+        30% {
+          clip-path: inset(91% 0 2% 0);
+        }
+        40% {
+          clip-path: inset(45% 0 23% 0);
+        }
+        50% {
+          clip-path: inset(23% 0 19% 0);
+        }
+        60% {
+          clip-path: inset(86% 0 10% 0);
+        }
+        70% {
+          clip-path: inset(38% 0 32% 0);
+        }
+        80% {
+          clip-path: inset(32% 0 57% 0);
+        }
+        90% {
+          clip-path: inset(94% 0 3% 0);
+        }
+        100% {
+          clip-path: inset(67% 0 25% 0);
+        }
+      }
+
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--dark-blue);
+        z-index: 10001;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s ease-out;
+      }
+
+      .preloader-hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #log {
+        font-family: "Chakra Petch", monospace;
+        color: var(--cyber-cyan);
+        font-size: 1rem;
+        text-align: left;
+        width: 250px;
+      }
+
+      .log-line {
+        white-space: pre;
+        opacity: 0;
+        animation: fadeIn 0.1s forwards;
+      }
+
+      .progress-bar-preloader {
+        width: 250px;
+        height: 4px;
+        background-color: var(--slate);
+        margin-top: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .progress-preloader {
+        height: 100%;
+        background-color: var(--cyber-magenta);
+        transform-origin: left;
+        transition: transform 0.5s linear;
+        transform: scaleX(0);
+      }
+
+      /* Hide/show navbar */
+      #header {
+        transition:
+          transform 0.3s ease-in-out,
+          background-color 0.3s ease-in-out;
+      }
+
+      #header.hide {
+        transform: translateY(-100%);
+      }
+
+      /* Card hover effect */
+      .card-cyber:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 240, 255, 0.4);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      /* Main button gradient */
+      .cta-button {
+        background: linear-gradient(
+          45deg,
+          var(--cyber-magenta),
+          var(--cyber-cyan)
+        );
+        border: none;
+        box-shadow: 0 0 15px rgba(240, 0, 184, 0.5);
+      }
+
+      /* Main button hover effect */
+      .cta-button:hover {
+        background: linear-gradient(
+          45deg,
+          var(--cyber-cyan),
+          var(--cyber-magenta)
+        );
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        color: white;
+      }
+
+      /* Progress bar gradient */
+      .skill-card .progress {
+        background: linear-gradient(
+          90deg,
+          var(--cyber-cyan),
+          var(--cyber-magenta)
+        );
+        box-shadow: 0 0 5px var(--cyber-cyan);
+      }
+
+      .scroll-container::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* New and improved styling */
+      .timeline-item {
+        position: relative;
+        padding-left: 50px;
+        border-left: 1px solid var(--slate);
+      }
+
+      .timeline-item-icon {
+        position: absolute;
+        left: -12px;
+        top: 5px;
+        color: var(--cyber-cyan);
+        background-color: var(--dark-blue);
+        padding: 5px;
+        border-radius: 50%;
+        border: 2px solid var(--cyber-cyan);
+        transform: scale(1.1);
+      }
+
+      /* Flexbox for About Me section */
+      #tentang .flex-lg-row {
+        flex-direction: column;
+        align-items: center;
+      }
+      @media (min-width: 1024px) {
+        #tentang .flex-lg-row {
+          flex-direction: row;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <div id="preloader">
+      <div id="log"></div>
+      <div class="progress-bar-preloader">
+        <div id="progress-preloader" class="progress-preloader"></div>
+      </div>
+    </div>
+
+>>>>>>> 744759a (update baru)
     <div class="scanline-overlay"></div>
     <canvas id="threejs-canvas"></canvas>
     <div class="cursor-dot-outline"></div>
     <div class="cursor-dot"></div>
 
+<<<<<<< HEAD
     <header id="header" class="glass-effect fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-white tracking-widest hover:text-cyber-cyan transition-colors">ANFSUMR</a>
@@ -1109,3 +1745,1183 @@
     </script>
 </body>
 </html>
+=======
+    <header
+      id="header"
+      class="glass-effect fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+    >
+      <div
+        class="container mx-auto px-6 py-3 flex justify-between items-center"
+      >
+        <a
+          href="#"
+          class="text-2xl font-bold text-white tracking-widest hover:text-cyber-cyan transition-colors"
+          >ANFSUMR</a
+        >
+        <nav class="hidden md:flex space-x-8" id="desktop-nav">
+          <a href="#about" class="nav-link">MODULE_01: PROFILE</a>
+          <a href="#projects" class="nav-link">MODULE_02: PROJECTS</a>
+          <a href="#certifications" class="nav-link"
+            >MODULE_03: CERTIFICATIONS</a
+          >
+          <a href="#contact" class="nav-link">MODULE_04: CONTACT</a>
+        </nav>
+        <div class="flex items-center">
+          <button id="mute-btn" class="text-white mr-4">
+            <i data-lucide="volume-2"></i>
+          </button>
+          <button id="mobile-menu-button" class="md:hidden text-white">
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+      </div>
+      <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
+        <a href="#about" class="block nav-link">MODULE_01: PROFILE</a>
+        <a href="#projects" class="block nav-link">MODULE_02: PROJECTS</a>
+        <a href="#certifications" class="block nav-link"
+          >MODULE_03: CERTIFICATIONS</a
+        >
+        <a href="#contact" class="block nav-link">MODULE_04: CONTACT</a>
+      </div>
+    </header>
+
+    <main class="relative z-10">
+      <section id="hero">
+        <div class="container mx-auto px-6 text-center relative z-10">
+          <h1
+            class="text-4xl md:text-6xl font-bold text-white mb-4 scramble-text"
+            data-original-text="MUHAMMAD ANFASA UMAR "
+          >
+            MUHAMMAD ANFASA UMAR
+          </h1>
+          <p
+            class="text-xl md:text-2xl text-slate-300 mb-8 max-w-3xl mx-auto font-mono"
+          >
+            >&nbsp;<span id="typewriter" class="font-semibold"></span>
+          </p>
+          <div
+            class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4"
+          >
+            <a
+              href="https://wa.me/qr/7Q54TO7LKLRKL1"
+              class="cta-button font-bold py-3 px-8 transition duration-300 transform hover:scale-105 w-full sm:w-auto"
+              >CONTACT US</a
+            >
+            <a
+              href="cv.jpg"
+              download
+              class="bg-slate-700 text-white font-bold py-3 px-8 hover:bg-slate-600 transition duration-300 flex items-center justify-center gap-2 w-full sm:w-auto border border-slate-600"
+              ><i data-lucide="download" class="w-5 h-5"></i> DOWNLOAD_CV.PDF</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="py-20 reveal">
+        <div class="container mx-auto px-6">
+          <div class="section-title-wrap mb-16">
+            <h2
+              class="section-title text-3xl md:text-4xl font-bold text-center text-cyber-cyan scramble-text"
+              data-original-text="PROFILE & SKILLS"
+            >
+              PROFILE & SKILLS
+            </h2>
+          </div>
+          <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-start">
+            <div
+              class="flex justify-center lg:justify-start lg:col-span-1 mb-12 lg:mb-0 px-20"
+            >
+              <img
+                loading="lazy"
+                src="foto gw .jpeg"
+                alt="Muhammad Anfasa Umar's profile picture"
+                class="w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-2 border-cyber-cyan shadow-lg shadow-cyber-cyan/30 transform transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+
+            <div class="lg:col-span-1">
+              <div class="text-lg text-slate-300 mb-12">
+                <h3
+                  class="text-2xl font-bold text-white mb-4 scramble-text"
+                  data-original-text="// ABOUT ME"
+                >
+                  // ABOUT ME
+                </h3>
+                <p class="mb-4 font-sans leading-relaxed">
+                  I'm an Information Technology (IT) specialist with a passion
+                  for Netrworking and implementing digital solutions that are
+                  both efficient and impactful.
+                </p>
+                <p class="mb-6 font-sans leading-relaxed">
+                  My core protocols are collaboration, adaptive learning, and
+                  high-quality execution. I believe the best systems are born
+                  from synchronous communication.
+                </p>
+              </div>
+
+              <div class="text-lg text-slate-300">
+                <h3
+                  class="text-2xl font-bold text-white mb-6 scramble-text"
+                  data-original-text="// STUDY"
+                >
+                  // STUDY
+                </h3>
+                <div class="space-y-8 relative">
+                  <div class="timeline-item reveal">
+                    <i
+                      data-lucide="graduation-cap"
+                      class="timeline-item-icon w-5 h-5 absolute"
+                    ></i>
+                    <p class="font-semibold text-cyber-magenta">
+                      2024 - PRESENT
+                    </p>
+                    <h4 class="font-bold text-xl text-white mt-1">
+                      INFORMATIC ENGGINERING
+                    </h4>
+                    <p class="text-slate-400 font-sans">STT NURUL FIKRI</p>
+                  </div>
+                  <div class="timeline-item reveal">
+                    <i
+                      data-lucide="school"
+                      class="timeline-item-icon w-5 h-5 absolute"
+                    ></i>
+                    <p class="font-semibold text-cyber-magenta">2021 - 2024</p>
+                    <h4 class="font-bold text-xl text-white mt-1">
+                      COMPUTER AND NETWORK ENGINEERING
+                    </h4>
+                    <p class="text-slate-400 font-sans">
+                      SMK MUHAMMADIYAH BLIGO
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-20">
+            <h3
+              class="text-2xl font-bold text-white mb-6 text-center scramble-text"
+              data-original-text="// SKILLS"
+            >
+              // SKILLS
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="skill-card glass-effect p-4 reveal">
+                <div class="flex items-center gap-3 mb-3">
+                  <i data-lucide="atom" class="w-7 h-7 text-sky-400"></i>
+                  <h4 class="font-bold text-lg text-white">React</h4>
+                </div>
+                <p class="text-sm text-slate-400 mb-3 font-sans">
+                  UI & state management.
+                </p>
+                <div class="progress-bar">
+                  <div class="progress" style="--progress-width: 0.9"></div>
+                </div>
+              </div>
+              <div class="skill-card glass-effect p-4 reveal">
+                <div class="flex items-center gap-3 mb-3">
+                  <i data-lucide="database" class="w-7 h-7 text-green-400"></i>
+                  <h4 class="font-bold text-lg text-white">Node.js</h4>
+                </div>
+                <p class="text-sm text-slate-400 mb-3 font-sans">
+                  Server-side logic & API.
+                </p>
+                <div class="progress-bar">
+                  <div class="progress" style="--progress-width: 0.8"></div>
+                </div>
+              </div>
+              <div class="skill-card glass-effect p-4 reveal">
+                <div class="flex items-center gap-3 mb-3">
+                  <i data-lucide="router" class="w-7 h-7 text-red-400"></i>
+                  <h4 class="font-bold text-lg text-white">Network</h4>
+                </div>
+                <p class="text-sm text-slate-400 mb-3 font-sans">
+                  Network Engineer & IT Support.
+                </p>
+                <div class="progress-bar">
+                  <div class="progress" style="--progress-width: 0.9"></div>
+                </div>
+              </div>
+              <div class="skill-card glass-effect p-4 reveal">
+                <div class="flex items-center gap-3 mb-3">
+                  <i
+                    data-lucide="hard-drive"
+                    class="w-7 h-7 text-orange-400"
+                  ></i>
+                  <h4 class="font-bold text-lg text-white">Hardware</h4>
+                </div>
+                <p class="text-sm text-slate-400 mb-3 font-sans">
+                  Hardware Assembly & Repair.
+                </p>
+                <div class="progress-bar">
+                  <div class="progress" style="--progress-width: 0.9"></div>
+                </div>
+              </div>
+              <div class="skill-card glass-effect p-4 reveal">
+                <div class="flex items-center gap-3 mb-3">
+                  <i data-lucide="figma" class="w-7 h-7 text-pink-400"></i>
+                  <h4 class="font-bold text-lg text-white">Figma</h4>
+                </div>
+                <p class="text-sm text-slate-400 mb-3 font-sans">
+                  Prototyping & UI systems.
+                </p>
+                <div class="progress-bar">
+                  <div class="progress" style="--progress-width: 0.95"></div>
+                </div>
+              </div>
+              <div class="skill-card glass-effect p-4 reveal">
+                <div class="flex items-center gap-3 mb-3">
+                  <i data-lucide="wind" class="w-7 h-7 text-teal-400"></i>
+                  <h4 class="font-bold text-lg text-white">Tailwind</h4>
+                </div>
+                <p class="text-sm text-slate-400 mb-3 font-sans">
+                  Utility-first CSS.
+                </p>
+                <div class="progress-bar">
+                  <div class="progress" style="--progress-width: 0.9"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="py-20 bg-black/20 reveal">
+        <div class="container mx-auto px-6">
+          <div class="section-title-wrap mb-8">
+            <h2
+              class="section-title text-3xl md:text-4xl font-bold text-center text-cyber-cyan scramble-text"
+              data-original-text="PROJECT_ARCHIVES"
+            >
+              PROJECT_ARCHIVES
+            </h2>
+          </div>
+          <div
+            id="project-filters"
+            class="flex justify-center flex-wrap gap-4 mb-12"
+          >
+            <button class="active" data-filter="all">ALL_FILES</button
+            ><button data-filter="developer">DEVELOPER</button
+            ><button data-filter="figma">FIGMA</button
+            ><button data-filter="repair_hardware">REPAIR_HARDWARE</button
+            ><button data-filter="network">NETWORK</button>
+          </div>
+          <div
+            id="project-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            <div class="project-item" data-category="figma">
+              <div class="card-cyber group flex flex-col h-full">
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="EdLink.png"
+                    alt="Project EdLink: An innovative e-learning platform."
+                    class="w-full h-48 object-cover"
+                  />
+                </div>
+                <div class="p-6 flex flex-col flex-grow glass-effect">
+                  <h3 class="text-xl font-bold mb-2">Project: EdLink</h3>
+                  <p class="text-slate-400 mb-4 flex-grow font-sans">
+                    An innovative online learning platform designed to support
+                    lectures. It offers tools for course management, content
+                    sharing, and collaborative learning.
+                  </p>
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span
+                      class="bg-purple-900/50 text-purple-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >Figma</span
+                    >
+                    <span
+                      class="bg-green-900/50 text-green-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >UI/UX Research</span
+                    >
+                  </div>
+                  <a
+                    href="https://www.figma.com/design/L6c79jBRLzDvCoZoMvzj50/Tahap-2-Kelompok-3?node-id=1-3&p=f&t=vYidNZu1hoL6uiqJ-0"
+                    target="_blank"
+                    class="text-cyber-cyan font-semibold hover:underline mt-auto group/link inline-flex items-center gap-2"
+                    >ACCESS_LOG
+                    <i
+                      data-lucide="arrow-right"
+                      class="w-4 h-4 transition-transform group-hover/link:translate-x-1"
+                    ></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="project-item" data-category="figma">
+              <div class="card-cyber group flex flex-col h-full">
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="jaktrans.png"
+                    alt="Project JakTrans: An innovative payment app for Jakarta's public transport."
+                    class="w-full h-48 object-cover"
+                  />
+                </div>
+                <div class="p-6 flex flex-col flex-grow glass-effect">
+                  <h3 class="text-xl font-bold mb-2">Project: JakTrans</h3>
+                  <p class="text-slate-400 mb-4 flex-grow font-sans">
+                    An innovative payment app for Jakarta's public transport,
+                    designed to improve convenience and efficiency. It uses NFC
+                    technology for seamless payments and provides real-time GPS
+                    tracking and route information for better journey planning.
+                  </p>
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span
+                      class="bg-orange-900/50 text-orange-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >Figma</span
+                    >
+                    <span
+                      class="bg-pink-900/50 text-pink-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >UI/UX Research</span
+                    >
+                  </div>
+                  <a
+                    href="https://www.figma.com/design/xeLYtvbidT3pQroHrI9Akw/Untitled?node-id=0-1&p=f&t=2n6FAvBlGS8hbWtO-0"
+                    target="_blank"
+                    class="text-cyber-cyan font-semibold hover:underline mt-auto group/link inline-flex items-center gap-2"
+                    >ACCESS_LOG
+                    <i
+                      data-lucide="arrow-right"
+                      class="w-4 h-4 transition-transform group-hover/link:translate-x-1"
+                    ></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="project-item" data-category="developer">
+              <div class="card-cyber group flex flex-col h-full">
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="MLEB.png"
+                    alt="Project MLEB: Museum website platform."
+                    class="w-full h-48 object-cover"
+                  />
+                </div>
+                <div class="p-6 flex flex-col flex-grow glass-effect">
+                  <h3 class="text-xl font-bold mb-2">Project: MLEB</h3>
+                  <p class="text-slate-400 mb-4 flex-grow font-sans">
+                    A museum website platform designed to attract visitors and
+                    provide an engaging virtual tour experience with rich
+                    historical content.
+                  </p>
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span
+                      class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >Vue.js</span
+                    >
+                    <span
+                      class="bg-red-900/50 text-red-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >D3.js</span
+                    >
+                  </div>
+                  <a
+                    href="https://github.com/AARidzki/mlebt/tree/anfasa"
+                    target="_blank"
+                    class="text-cyber-cyan font-semibold hover:underline mt-auto group/link inline-flex items-center gap-2"
+                    >ACCESS_LOG
+                    <i
+                      data-lucide="arrow-right"
+                      class="w-4 h-4 transition-transform group-hover/link:translate-x-1"
+                    ></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="project-item" data-category="developer">
+              <div class="card-cyber group flex flex-col h-full">
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="portofolio.png"
+                    alt="Project MLEB: Museum website platform."
+                    class="w-full h-48 object-cover"
+                  />
+                </div>
+                <div class="p-6 flex flex-col flex-grow glass-effect">
+                  <h3 class="text-xl font-bold mb-2">Project: Portofolio</h3>
+                  <p class="text-slate-400 mb-4 flex-grow font-sans">
+                    A personal portfolio website showcasing my projects and
+                    skills.
+                  </p>
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span
+                      class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >tailwind.css.js</span
+                    >
+                    <span
+                      class="bg-red-900/50 text-red-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >Three.js</span
+                    >
+                  </div>
+                  <a
+                    href="https://github.com/anfasaumar/portofolio"
+                    target="_blank"
+                    class="text-cyber-cyan font-semibold hover:underline mt-auto group/link inline-flex items-center gap-2"
+                    >ACCESS_LOG
+                    <i
+                      data-lucide="arrow-right"
+                      class="w-4 h-4 transition-transform group-hover/link:translate-x-1"
+                    ></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="project-item" data-category="developer">
+              <div class="card-cyber group flex flex-col h-full">
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="forma.jpg"
+                    alt="Project MLEB: Museum website platform."
+                    class="w-full h-48 object-cover"
+                  />
+                </div>
+                <div class="p-6 flex flex-col flex-grow glass-effect">
+                  <h3 class="text-xl font-bold mb-2">Project: FORMA</h3>
+                  <p class="text-slate-400 mb-4 flex-grow font-sans">
+                    is a digital platform specifically designed to deliver
+                    up-to-date information about student organizations within
+                    the campus environment. This website serves as a dynamic hub
+                    for campus events, open recruitment for organizations and
+                    volunteers, updates from student bodies, and provides a
+                    student aspiration forum as a space for constructive
+                    dialogue between students and campus administrators.
+                  </p>
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span
+                      class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >Laravel</span
+                    >
+                    <span
+                      class="bg-red-900/50 text-red-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >PHP</span
+                    >
+                  </div>
+                  <a
+                    href="https://github.com/Samashi11/FORMA_Kelompok1_PPWEB2.git"
+                    target="_blank"
+                    class="text-cyber-cyan font-semibold hover:underline mt-auto group/link inline-flex items-center gap-2"
+                    >ACCESS_LOG
+                    <i
+                      data-lucide="arrow-right"
+                      class="w-4 h-4 transition-transform group-hover/link:translate-x-1"
+                    ></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="project-item" data-category="developer">
+              <div class="card-cyber group flex flex-col h-full">
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="report_intern.png"
+                    alt="Project MLEB: Museum website platform."
+                    class="w-full h-48 object-cover"
+                  />
+                </div>
+                <div class="p-6 flex flex-col flex-grow glass-effect">
+                  <h3 class="text-xl font-bold mb-2">
+                    Project: Report Internship
+                  </h3>
+                  <p class="text-slate-400 mb-4 flex-grow font-sans">
+                    is a digital platform specifically designed to deliver
+                    up-to-date information about student organizations within
+                    the campus environment. This website serves as a dynamic hub
+                    for campus events, open recruitment for organizations and
+                    volunteers, updates from student bodies, and provides a
+                    student aspiration forum as a space for constructive
+                    dialogue between students and campus administrators.
+                  </p>
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span
+                      class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >Node.js</span
+                    >
+                    <span
+                      class="bg-red-900/50 text-red-300 text-xs font-semibold px-2.5 py-0.5 font-sans"
+                      >HTML5</span
+                    >
+                  </div>
+                  <a
+                    href="https://github.com/Samashi11/FORMA_Kelompok1_PPWEB2.git"
+                    target="_blank"
+                    class="text-cyber-cyan font-semibold hover:underline mt-auto group/link inline-flex items-center gap-2"
+                    >ACCESS_LOG
+                    <i
+                      data-lucide="arrow-right"
+                      class="w-4 h-4 transition-transform group-hover/link:translate-x-1"
+                    ></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="certifications" class="py-20 reveal">
+        <div class="container mx-auto px-6">
+          <div class="section-title-wrap mb-12">
+            <h2
+              class="section-title text-3xl md:text-4xl font-bold text-center text-cyber-cyan scramble-text"
+              data-original-text="CERTIFICATIONS"
+            >
+              CERTIFICATIONS
+            </h2>
+          </div>
+          <div
+            id="cert-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            <div class="cert-item">
+              <button
+                class="open-cert-modal card-cyber text-left group w-full h-full"
+                data-src="Sertifikat.K3L_page-0001.jpg"
+              >
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="Sertifikat.K3L_page-0001.jpg"
+                    alt="Professional Databreach Analyst certificate thumbnail"
+                    class="w-full h-40 object-cover"
+                  />
+                </div>
+                <div class="p-6 glass-effect h-full">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    Sertifikasi K3L
+                  </h3>
+                  <p class="text-slate-400 mb-1 font-sans">
+                    Issued by: GeoSafety indonesia
+                  </p>
+                  <p class="text-sm text-slate-500 mb-4 font-sans">
+                    Date: 12.09.2025
+                  </p>
+                  <span
+                    class="text-cyber-cyan font-semibold mt-auto flex items-center gap-2"
+                    >VIEW_DATA <i data-lucide="zoom-in" class="w-4 h-4"></i
+                  ></span>
+                </div>
+              </button>
+            </div>
+            <div class="cert-item">
+              <button
+                class="open-cert-modal card-cyber text-left group w-full h-full"
+                data-src="Sertifikat_magang.jpg"
+              >
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="Sertifikat_magang.jpg"
+                    alt="Internship Certificate thumbnail"
+                    class="w-full h-40 object-cover"
+                  />
+                </div>
+                <div class="p-6 glass-effect h-full">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    Sertifikat Magang
+                  </h3>
+                  <p class="text-slate-400 mb-1 font-sans">
+                    Issued by: PT. Pusdiklat PLN Museum Listrik dan Energi Baru
+                  </p>
+                  <p class="text-sm text-slate-500 mb-4 font-sans">
+                    Date: 15.09.2025
+                  </p>
+                  <span
+                    class="text-cyber-cyan font-semibold mt-auto flex items-center gap-2"
+                    >VIEW_DATA <i data-lucide="zoom-in" class="w-4 h-4"></i
+                  ></span>
+                </div>
+              </button>
+            </div>
+
+            <div class="cert-item">
+              <button
+                class="open-cert-modal card-cyber text-left group w-full h-full"
+                data-src="MUHAMMAD ANFASA UMAR (1) (1).png"
+              >
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="MUHAMMAD ANFASA UMAR (1) (1).png"
+                    alt="Project Officer Certificate thumbnail"
+                    class="w-full h-40 object-cover"
+                  />
+                </div>
+                <div class="p-6 glass-effect h-full">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    Sertifikat Project Officer
+                  </h3>
+                  <p class="text-slate-400 mb-1 font-sans">
+                    Issued by: BEM STT Terpadu Nurul Fikri
+                  </p>
+                  <p class="text-sm text-slate-500 mb-4 font-sans">
+                    Date: 14.12.2025
+                  </p>
+                  <span
+                    class="text-cyber-cyan font-semibold mt-auto flex items-center gap-2"
+                    >VIEW_DATA <i data-lucide="zoom-in" class="w-4 h-4"></i
+                  ></span>
+                </div>
+              </button>
+            </div>
+            <div class="cert-item">
+              <button
+                class="open-cert-modal card-cyber text-left group w-full h-full"
+                data-src="Juara 3 Esai - M. Anfasa.png"
+              >
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="Juara 3 Esai - M. Anfasa.png"
+                    alt="Sertifikat Juara 3 Lomba Essay thumbnail"
+                    class="w-full h-40 object-cover"
+                  />
+                </div>
+                <div class="p-6 glass-effect h-full">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    Sertifikat Juara 3 Lomba Essay
+                  </h3>
+                  <p class="text-slate-400 mb-1 font-sans">
+                    Issued by: EHA Institute
+                  </p>
+                  <p class="text-sm text-slate-500 mb-4 font-sans">
+                    Date: 29.11.2025
+                  </p>
+                  <span
+                    class="text-cyber-cyan font-semibold mt-auto flex items-center gap-2"
+                    >VIEW_DATA <i data-lucide="zoom-in" class="w-4 h-4"></i
+                  ></span>
+                </div>
+              </button>
+            </div>
+
+            <div class="cert-item">
+              <button
+                class="open-cert-modal card-cyber text-left group w-full h-full"
+                data-src="Anfasa Umar.png"
+              >
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="Anfasa Umar.png"
+                    alt="Sertifikat Pengabdian Masyarakat thumbnail"
+                    class="w-full h-40 object-cover"
+                  />
+                </div>
+                <div class="p-6 glass-effect h-full">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    Sertifikat Pengabdian Masyarakat
+                  </h3>
+                  <p class="text-slate-400 mb-1 font-sans">
+                    Issued by: BEM STT Terpadu Nurul Fikri
+                  </p>
+                  <p class="text-sm text-slate-500 mb-4 font-sans">
+                    Date: 12.08.2025
+                  </p>
+                  <span
+                    class="text-cyber-cyan font-semibold mt-auto flex items-center gap-2"
+                    >VIEW_DATA <i data-lucide="zoom-in" class="w-4 h-4"></i
+                  ></span>
+                </div>
+              </button>
+            </div>
+
+            <div class="cert-item">
+              <button
+                class="open-cert-modal card-cyber text-left group w-full h-full"
+                data-src="UMAR.png"
+              >
+                <div class="glitch-img">
+                  <img
+                    loading="lazy"
+                    src="UMAR.png"
+                    alt="Sertifikat Apresiasi thumbnail"
+                    class="w-full h-40 object-cover"
+                  />
+                </div>
+                <div class="p-6 glass-effect h-full">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    Sertifikat Apresiasi
+                  </h3>
+                  <p class="text-slate-400 mb-1 font-sans">
+                    Issued by: BEM STT Terpadu Nurul Fikri
+                  </p>
+                  <p class="text-sm text-slate-500 mb-4 font-sans">
+                    Date: 12.04.2025
+                  </p>
+                  <span
+                    class="text-cyber-cyan font-semibold mt-auto flex items-center gap-2"
+                    >VIEW_DATA <i data-lucide="zoom-in" class="w-4 h-4"></i
+                  ></span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="py-24 bg-black/40 border-t border-slate-900 reveal">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col items-center text-center">
+      <div class="section-title-wrap mb-10">
+        <h2 class="section-title text-3xl md:text-5xl font-bold text-cyber-cyan mb-4 scramble-text" 
+            data-original-text="ESTABLISH_CONNECTION">
+          ESTABLISH_CONNECTION
+        </h2>
+        <div class="h-1 w-24 bg-cyber-cyan mx-auto rounded-full shadow-[0_0_10px_#22d3ee]"></div>
+      </div>
+
+      <p class="text-lg text-slate-400 max-w-2xl mb-10 leading-relaxed font-sans">
+        If you have a project proposal, questions, or just want to connect, 
+        feel free to send a <span class="text-cyber-cyan font-mono">data_transmission</span>.
+      </p>
+
+      <a href="https://wa.me/qr/7Q54TO7LKLRKL1"     target="_blank"
+         rel="noopener noreferrer"
+         class="cta-button group relative inline-flex items-center justify-center overflow-hidden font-bold py-4 px-12 transition-all duration-300 hover:scale-105 active:scale-95 w-full sm:w-auto">
+        <span class="relative z-10 flex items-center gap-3">
+          SEND_MESSAGE <i data-lucide="send" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div id="certificate-modal" class="modal-overlay invisible opacity-0 transition-all duration-300 backdrop-blur-md">
+  <div class="modal-content relative max-w-4xl mx-auto p-4 scale-95 transition-transform duration-300">
+    <button id="close-cert-modal" class="absolute -top-12 right-0 text-white text-4xl hover:text-cyber-cyan transition-colors">
+      &times;
+    </button>
+    <div class="border-2 border-cyber-cyan/50 rounded-lg overflow-hidden bg-slate-900 shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+      <img id="cert-image" src="" alt="Certificate View" class="w-full h-auto object-contain max-h-[80vh]">
+    </div>
+  </div>
+</div>
+
+<footer class="py-16 border-t border-slate-800 bg-[#050505]">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 items-start">
+      
+      <div class="space-y-4">
+        <h3 class="text-2xl font-bold text-white mb-2 font-mono">// CLOSE_TRANSMISSION</h3>
+        <p class="text-slate-400 font-sans text-sm leading-relaxed">
+          Informatics Engineering Student @ STT-NF.<br>
+            Network Engineer, UI/UX Specialist, Frontend Developer, Hardware Technician.<br>
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <h4 class="text-cyber-cyan font-bold uppercase tracking-widest text-sm mb-4">Location</h4>
+        <p class="text-slate-400 font-sans text-sm flex items-start gap-3">
+          <i class="fa-solid fa-location-dot text-cyber-cyan mt-1"></i>
+          Kel.Srengseng Sawah, Jagakarsa, Jakarta Selatan,<br>DKI Jakarta, Indonesia
+        </p>
+      </div>
+
+      <div class="flex flex-col md:items-end gap-6">
+        <h4 class="text-cyber-cyan font-bold uppercase tracking-widest text-sm text-left md:text-right w-full">Access_Portals</h4>
+        <div class="flex space-x-4">
+          
+          <a href="https://www.instagram.com/anfsumr?igsh=Y3h6YTVyZHdsamk2" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="flex items-center justify-center w-12 h-12 bg-slate-900 border border-slate-700 text-slate-400 hover:text-pink-500 hover:border-pink-500 transition-all duration-300 rounded-xl group">
+            <i class="fa-brands fa-instagram text-xl group-hover:scale-110"></i>
+          </a>
+
+          <a href="https://www.linkedin.com/in/anfasa-umar-b21893341?utm_source=share_via&utm_content=profile&utm_medium=member_android" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="flex items-center justify-center w-12 h-12 bg-slate-900 border border-slate-700 text-slate-400 hover:text-blue-500 hover:border-blue-500 transition-all duration-300 rounded-xl group">
+            <i class="fa-brands fa-linkedin-in text-xl group-hover:scale-110"></i>
+          </a>
+
+          <a href="mailto:anfasaumar01@gmail.com" 
+             class="flex items-center justify-center w-12 h-12 bg-slate-900 border border-slate-700 text-slate-400 hover:text-cyber-cyan hover:border-cyber-cyan transition-all duration-300 rounded-xl group">
+            <i class="fa-solid fa-envelope text-xl group-hover:scale-110"></i>
+          </a>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-16 pt-8 border-t border-slate-900 text-center">
+      <p class="text-slate-600 font-mono text-[10px] tracking-tighter uppercase">
+        &copy; 2026 MUHAMMAD ANFASA UMAR. ALL DATA ENCRYPTED.
+      </p>
+    </div>
+  </div>
+</footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+
+        // --- PRELOADER & LOADING SEQUENCE ---
+        const preloader = document.getElementById("preloader");
+        const log = document.getElementById("log");
+        const progressBar = document.getElementById("progress-preloader");
+        const bootLines = [
+          "INITIALIZING TERMINAL...",
+          "BOOTING KERNEL V4.0...",
+          "LOADING UI MODULES...",
+          "DECRYPTING DATA STREAMS...",
+          "ESTABLISHING SECURE CONNECTION...",
+          "WELCOME, USER.",
+        ];
+        let lineIndex = 0;
+
+        function updateProgressBar(progress) {
+          progressBar.style.transform = `scaleX(${progress / 100})`;
+        }
+
+        function printLog() {
+          if (lineIndex < bootLines.length) {
+            const e = document.createElement("div");
+            e.className = "log-line";
+            e.textContent = `> ${bootLines[lineIndex]}`;
+            log.appendChild(e);
+            e.style.animationDelay = `${0.1 * lineIndex}s`;
+            updateProgressBar(((lineIndex + 1) / bootLines.length) * 100);
+            lineIndex++;
+            setTimeout(printLog, 300);
+          } else {
+            setTimeout(() => {
+              preloader.classList.add("preloader-hidden");
+              document.body.classList.add("body-loaded");
+            }, 500);
+          }
+        }
+        printLog();
+
+        // --- HIDE/SHOW NAV ON SCROLL ---
+        let lastScrollY = window.scrollY;
+        const header = document.getElementById("header");
+
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > lastScrollY && window.scrollY > 200) {
+            header.classList.add("hide");
+          } else {
+            header.classList.remove("hide");
+          }
+          lastScrollY = window.scrollY;
+        });
+
+        // --- TYPEWRITER EFFECT ---
+        const typewriter = document.getElementById("typewriter");
+        const messages = [
+          "NETWORK_ENGINEER",
+          "UI/UX_SPECIALIST",
+          "FRONTEND_DEVELOPER",
+          "HARDWARE_TECHNICIAN",
+        ];
+        let messageIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeWriterEffect() {
+          const currentMessage = messages[messageIndex];
+          typewriter.textContent = currentMessage.substring(
+            0,
+            charIndex + (isDeleting ? 0 : 1),
+          );
+
+          if (!isDeleting && charIndex < currentMessage.length) {
+            charIndex++;
+          } else if (isDeleting && charIndex > 0) {
+            charIndex--;
+          } else if (!isDeleting && charIndex === currentMessage.length) {
+            setTimeout(() => (isDeleting = true), 2000);
+          } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            messageIndex = (messageIndex + 1) % messages.length;
+          }
+
+          setTimeout(typeWriterEffect, isDeleting ? 100 : 150);
+        }
+        typeWriterEffect();
+
+        // --- REVEAL ON SCROLL ---
+        const revealElements = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+        revealElements.forEach((el) => observer.observe(el));
+
+        // --- HERO MOUSE PARALLAX ---
+        const heroSection = document.getElementById("hero");
+        heroSection.addEventListener("mousemove", (e) => {
+          const rect = heroSection.getBoundingClientRect();
+          heroSection.style.setProperty("--x", `${e.clientX - rect.left}px`);
+          heroSection.style.setProperty("--y", `${e.clientY - rect.top}px`);
+        });
+
+        // --- CUSTOM CURSOR ---
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-dot-outline");
+        window.addEventListener("mousemove", (e) => {
+          cursorDot.style.left = `${e.clientX}px`;
+          cursorDot.style.top = `${e.clientY}px`;
+          cursorOutline.style.left = `${e.clientX}px`;
+          cursorOutline.style.top = `${e.clientY}px`;
+        });
+
+        // --- NAV LINK HIGHLIGHT ON SCROLL ---
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+        const sectionObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                navLinks.forEach((link) => {
+                  link.classList.remove("active");
+                  if (
+                    link.getAttribute("href").substring(1) === entry.target.id
+                  ) {
+                    link.classList.add("active");
+                  }
+                });
+              }
+            });
+          },
+          { rootMargin: "-30% 0px -70% 0px" },
+        );
+        sections.forEach((sec) => sectionObserver.observe(sec));
+
+        // --- CERTIFICATE MODAL ---
+        const certButtons = document.querySelectorAll(".open-cert-modal");
+        const closeCertBtn = document.getElementById("close-cert-modal");
+        const certModal = document.getElementById("certificate-modal");
+        const certImage = document.getElementById("cert-image");
+
+        certButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            certImage.setAttribute("src", button.getAttribute("data-src"));
+            certModal.classList.add("visible");
+          });
+        });
+
+        closeCertBtn.addEventListener("click", () =>
+          certModal.classList.remove("visible"),
+        );
+        certModal.addEventListener("click", (e) => {
+          if (e.target === certModal) {
+            certModal.classList.remove("visible");
+          }
+        });
+
+        // --- PROJECT FILTERING ---
+        const filterButtons = document.querySelectorAll(
+          "#project-filters button",
+        );
+        const projectItems = document.querySelectorAll(
+          "#project-grid .project-item",
+        );
+
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            document
+              .querySelector("#project-filters .active")
+              .classList.remove("active");
+            button.classList.add("active");
+            const filter = button.getAttribute("data-filter");
+            projectItems.forEach((item) => {
+              const categories = item.getAttribute("data-category");
+              if (filter === "all" || categories.includes(filter)) {
+                item.classList.remove("hidden");
+              } else {
+                item.classList.add("hidden");
+              }
+            });
+          });
+        });
+
+        // --- SCRAMBLE TEXT EFFECT ---
+        class Scrambler {
+          constructor(el) {
+            this.el = el;
+            this.originalText = el.dataset.originalText || el.innerText;
+            this.chars = "<>-_\\/[]{}—=+*^?#________";
+            this.update = this.update.bind(this);
+          }
+          setText(newText) {
+            const oldText = this.el.innerText;
+            const length = Math.max(oldText.length, newText.length);
+            const promise = new Promise((resolve) => (this.resolve = resolve));
+            this.queue = [];
+            for (let i = 0; i < length; i++) {
+              const from = oldText[i] || "";
+              const to = newText[i] || "";
+              const start = Math.floor(Math.random() * 40);
+              const end = start + Math.floor(Math.random() * 40);
+              this.queue.push({ from, to, start, end });
+            }
+            cancelAnimationFrame(this.frameRequest);
+            this.frame = 0;
+            this.update();
+            return promise;
+          }
+          update() {
+            let output = "";
+            let complete = 0;
+            for (let i = 0, n = this.queue.length; i < n; i++) {
+              let { from, to, start, end, char } = this.queue[i];
+              if (this.frame >= end) {
+                complete++;
+                output += to;
+              } else if (this.frame >= start) {
+                if (!char || Math.random() < 0.5) {
+                  char = this.randomChar();
+                  this.queue[i].char = char;
+                }
+                output += `<span class="dud">${char}</span>`;
+              } else {
+                output += from;
+              }
+            }
+            this.el.innerHTML = output;
+            if (complete === this.queue.length) {
+              this.resolve();
+            } else {
+              this.frameRequest = requestAnimationFrame(this.update);
+              this.frame++;
+            }
+          }
+          randomChar() {
+            return this.chars[Math.floor(Math.random() * this.chars.length)];
+          }
+        }
+
+        document.querySelectorAll(".scramble-text").forEach((el) => {
+          const scrambler = new Scrambler(el);
+          el.addEventListener("mouseenter", () =>
+            scrambler.setText(scrambler.originalText),
+          );
+        });
+
+        // --- THREE.JS 3D SCENE ---
+        if (typeof THREE !== "undefined") {
+          let scene,
+            camera,
+            renderer,
+            robotModel,
+            mixer,
+            clock,
+            mouseX = 0,
+            mouseY = 0;
+          const windowHalfX = window.innerWidth / 2;
+          const windowHalfY = window.innerHeight / 2;
+
+          function initThreeJS() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(
+              75,
+              window.innerWidth / window.innerHeight,
+              0.1,
+              1000,
+            );
+            renderer = new THREE.WebGLRenderer({
+              canvas: document.getElementById("threejs-canvas"),
+              antialias: true,
+              alpha: true,
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+            scene.add(ambientLight);
+            const keyLight = new THREE.DirectionalLight(
+              new THREE.Color(0xf000b8),
+              1,
+            );
+            keyLight.position.set(-10, 10, 10);
+            scene.add(keyLight);
+            const fillLight = new THREE.DirectionalLight(
+              new THREE.Color(0x00f0ff),
+              0.7,
+            );
+            fillLight.position.set(10, 10, 10);
+            scene.add(fillLight);
+            const backLight = new THREE.DirectionalLight(0xffffff, 1);
+            backLight.position.set(5, -10, -10);
+            scene.add(backLight);
+
+            const loader = new THREE.GLTFLoader();
+            loader.load(
+              "combat_robot.glb",
+              (gltf) => {
+                robotModel = gltf.scene;
+                robotModel.scale.set(15, 15, 15);
+                robotModel.position.y = -5;
+                scene.add(robotModel);
+
+                mixer = new THREE.AnimationMixer(robotModel);
+                if (gltf.animations.length) {
+                  gltf.animations.forEach((clip) => {
+                    mixer.clipAction(clip).play();
+                  });
+                }
+              },
+              undefined,
+              (error) => {
+                console.error(
+                  "An error happened while loading the model:",
+                  error,
+                );
+              },
+            );
+
+            camera.position.z = 15;
+            clock = new THREE.Clock();
+            document.addEventListener("mousemove", onDocumentMouseMove);
+            window.addEventListener("resize", onWindowResize, false);
+          }
+
+          function onDocumentMouseMove(event) {
+            mouseX = (event.clientX - windowHalfX) / 100;
+            mouseY = (event.clientY - windowHalfY) / 100;
+          }
+
+          function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+          }
+
+          function animateThreeJS() {
+            requestAnimationFrame(animateThreeJS);
+            const delta = clock.getDelta();
+            if (mixer) mixer.update(delta);
+            if (robotModel) {
+              robotModel.rotation.y += 0.001;
+            }
+
+            camera.position.x += (mouseX - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+          }
+
+          initThreeJS();
+          animateThreeJS();
+        } else {
+          console.error("Three.js or GLTFLoader not loaded.");
+        }
+      });
+    </script>
+  </body>
+</html>
+>>>>>>> 744759a (update baru)
